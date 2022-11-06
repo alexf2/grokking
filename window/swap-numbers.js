@@ -16,7 +16,10 @@ export const swapNumbers2 = (a, b) => {
 
 function test() {
   [
-      [1, 2]
+      [1, 2],
+      [,5],
+      [6,],
+      [undefined, 9],
   ].forEach(([a, b], i) => {
       console.log(`${i + 1}:`, swapNumbers1(a, b), ' / ', swapNumbers2(a, b));
   });

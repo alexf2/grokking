@@ -1,0 +1,24 @@
+{
+  "bail": 50,
+  "automock": false,
+  "verbose": true,
+  "moduleFileExtensions": [
+    "js",
+    "json"
+  ],
+  "coverageDirectory": "<rootDir>../coverage/",
+  "testEnvironment": "jsdom",
+  "testRegex": ".*\\.spec\\.(ts|js)$",
+  "roots": ["<rootDir>"],
+  "collectCoverageFrom": [
+    "!**/node_modules/**",
+    "!**/vendor/**"
+  ],
+  "globals": {},
+  "testMatch": null,
+  "setupFilesAfterEnv": ["jest-expect-message"],
+  "transformIgnorePatterns": ["node_modules/"],
+  "transform": {
+    "^.+\\.js?$": "babel-jest"
+  }
+}
