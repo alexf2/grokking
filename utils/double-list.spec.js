@@ -146,6 +146,17 @@ describe('Double linked list', () => {
     expect(l.last).toBe(12)
   })
 
+  test('removeNode all', () => {
+    while (!l.empty)
+      l.removeNode(l.lastItem)
+
+    expect(l.toArray()).toHaveLength(0)
+    expect(l.count).toBe(0)
+    expect(l.toArray()).toStrictEqual([])
+    expect(l.firstItem).toBeNull()
+    expect(l.lastItem).toBeNull()
+  })
+
   test('add and remove', () => {
     l.addMany(50, -1, 60, 0)
     const node = l.find(-1)

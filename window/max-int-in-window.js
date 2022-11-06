@@ -3,6 +3,7 @@
 */
 import {SimpleDequeue} from '../utils/simple-dequeue.js'
 import {errorWrapper} from '../utils/error-wrapper.js'
+import {DoubleList} from '../utils/double-list.js'
 
 export const moveAndFindMax = (arr, size) => {
   const result = []
@@ -10,7 +11,7 @@ export const moveAndFindMax = (arr, size) => {
     return result
 
   if (size < 1)
-    throw new Error(`Illegal size: ${size}. Shold be > 0`)
+    throw new Error(`Illegal size: ${size}. Should be > 0`)
 
   const { length } = arr
   if (length < 1)
@@ -46,6 +47,48 @@ export const moveAndFindMax = (arr, size) => {
   return result
 }
 
+export const moveAndFindMaxDequeue = (arr, size) => {
+  const result = []
+  if (!Array.isArray(arr))
+    return result
+
+  if (size < 1)
+    throw new Error(`Illegal size: ${size}. Should be > 0`)
+
+  const { length } = arr
+  if (length < 1)
+    return result
+
+  const windowLen = Math.min(length, size)  
+  const dq = new DoubleList() // индексы
+
+  const processWindow = (index) => {
+    const value = arr[index]
+    // Удаляем из очереди бесполезные элементы, которые меньше текущего добавляемого элемента из массива.
+    // Таким образом, максимальный элемент будет первым.
+    while(!dq.empty && value >= arr[dq.last])
+      dq.removeLast()
+
+    dq.add(index)
+  }
+
+  for (let i = 0; i < length; ++i) {
+    if (i >= windowLen) {
+      result.push(arr[dq.first])
+
+      // Удаляем индексы из очереди, которые уже вне окна.
+      while(!dq.empty && dq.first <= i - windowLen)
+        dq.removeFirst()
+    }
+
+    processWindow(i)
+  }
+
+  result.push(arr[dq.first])
+
+  return result
+}
+
 function test() {
   [
     [, 3], //1
@@ -69,7 +112,7 @@ function test() {
     [[9,5,3,1,6,3] , 4],
     [[1,2] , 2],
   ].forEach(([arr, windowSize], i) => {
-    errorWrapper(i, () => moveAndFindMax(arr, windowSize));
+    errorWrapper(i, () => `${moveAndFindMax(arr, windowSize)} / ${moveAndFindMaxDequeue(arr, windowSize)}`);
   });
 }
 

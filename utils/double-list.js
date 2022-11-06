@@ -83,18 +83,24 @@ export class DoubleList {
       throw Error('No node to remove specified')
       
     if (nodeToRemove === this.firstItem) {
-      nodeToRemove.nextItem.prevItem = null
+      if (nodeToRemove.nextItem)
+        nodeToRemove.nextItem.prevItem = null
       this.firstItem = nodeToRemove.nextItem
       nodeToRemove.nextItem = null
+      if (this.size === 1)
+        this.lastItem = null
 
       this.size--
       return nodeToRemove
     } 
     
     if (nodeToRemove === this.lastItem) {
-      nodeToRemove.prevItem.nextItem = null
+      if (nodeToRemove.prevItem)
+        nodeToRemove.prevItem.nextItem = null
       this.lastItem = nodeToRemove.prevItem
       nodeToRemove.prevItem = null
+      if (this.size === 1)
+        this.firstItem = null
 
       this.size--
       return nodeToRemove
@@ -107,6 +113,12 @@ export class DoubleList {
 
     this.size--
     return nodeToRemove    
+  }
+  removeFirst() {
+    return this.removeNode(this.firstItem)
+  }
+  removeLast() {
+    return this.removeNode(this.lastItem)
   }
   validateIntegrity() {
     if (!this.firstItem || !this.lastItem) {
@@ -150,6 +162,8 @@ export class DoubleList {
 
     [this.firstItem, this.lastItem] = [this.lastItem, this.firstItem]
   }
+
+  /* Conversion */
   printToString(reversed = false) {
     const result = []
     const conv = ({data}) => result.push(String(data))
@@ -166,8 +180,14 @@ export class DoubleList {
 
     return result
   }
+  /* Conversion end */
+
+  /* Getters */
   get count() {
     return this.size
+  }
+  get empty() {
+    return this.size === 0
   }
   get first() {
     return this.firstItem?.data
@@ -175,4 +195,5 @@ export class DoubleList {
   get last() {
     return this.lastItem?.data
   }
+  /* Getters end */
 }
