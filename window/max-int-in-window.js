@@ -1,5 +1,7 @@
 /*
   Given an integer array and a window of size w, find the current maximum value in the window as it slides through the entire array.
+
+  the overall time complexity of the solution, irrespective of the input, is O(w + n).
 */
 import {SimpleDequeue} from '../utils/simple-dequeue.js'
 import {errorWrapper} from '../utils/error-wrapper.js'
