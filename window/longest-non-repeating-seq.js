@@ -1,4 +1,7 @@
 /*
+  Given a string, inputString find the longest substring without repeating characters, and return the length of that longest substring.
+  
+  We have to iterate over all the n elements in the string. Therefore, the time complexity is O(n).
 */
 import {errorWrapper} from '../utils/error-wrapper.js'
 
@@ -17,6 +20,7 @@ export const longestNonRep = (str) => {
   }
 
   if (typeof str !== 'string' || !str.trim()) {
+    result.len = result.len === -1 ? 0 : result.len
     return result
   }
 
@@ -27,6 +31,9 @@ export const longestNonRep = (str) => {
   }
 
   const pushStr = (indexStop, index) => {
+    if (indexStop < current.index)
+      return
+
     current.len = index - current.index
     if (current.len > result.len)
       result = {...current}
@@ -36,12 +43,6 @@ export const longestNonRep = (str) => {
 
     current.index = indexStop + 1
     current.len = -1
-
-    for (let [ch, idx] of chars)
-      if (idx < indexStop)
-        chars.delete(ch)
-      else  
-        break
   }
 
   for (let i = 0; i < str.length; ++i) {
@@ -79,6 +80,7 @@ function test() {
     "aaaabaaa",
     "bbbbb",
     "ABCDEFGHI",
+    '1231a312096',
   ].forEach((str, i) => {
     errorWrapper(i, () => `${str}: ${formatSubstr(longestNonRep(str), str)}, len = ${longestNonRep(str).len}`);
   });
