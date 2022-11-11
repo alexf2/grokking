@@ -20,7 +20,7 @@ export const longestNonRep = (str) => {
   }
 
   if (typeof str !== 'string' || !str.trim()) {
-    result.len = result.len === -1 ? 0 : result.len
+    result.len = 0
     return result
   }
 
@@ -82,7 +82,8 @@ function test() {
     "ABCDEFGHI",
     '1231a312096',
   ].forEach((str, i) => {
-    errorWrapper(i, () => `${str}: ${formatSubstr(longestNonRep(str), str)}, len = ${longestNonRep(str).len}`);
+    const desc = longestNonRep(str)
+    errorWrapper(i, () => `${str}: ${formatSubstr(desc, str)}, len = ${desc.len}`);
   });
 }
 
